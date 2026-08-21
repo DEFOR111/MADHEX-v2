@@ -1,0 +1,8 @@
+*.bak
+*-backups/
+*.kicad_pcb-bak
+fp-info-cache
+_autosave-*
+*.lck
+sym-lib-table.bak
+**/.history/
