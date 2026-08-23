@@ -521,6 +521,7 @@
         "track_width": 0.15,
         "tuning_profile": "",
         "via_diameter": 0.6,
+        "via_drill": 0.4,
         "wire_width": 6
       },
       {
@@ -531,7 +532,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 10.0,
         "tuning_profile": "",
-        "via_diameter": 0.75
+        "via_diameter": 0.75,
+        "via_drill": 0.4
       },
       {
         "clearance": 0.15,
@@ -541,7 +543,8 @@
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.15,
         "tuning_profile": "",
-        "via_diameter": 0.75
+        "via_diameter": 0.75,
+        "via_drill": 0.4
       }
     ],
     "meta": {
