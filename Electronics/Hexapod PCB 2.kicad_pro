@@ -581,7 +581,7 @@
       "netlist": "",
       "plot": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../mechanics/CAD/Hexapod PCB 2.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
