@@ -52,7 +52,7 @@ Custom 4-layer control board
 **Files:**
 * Schematic: [download the schematics](Electronics/PCB%20schematics.pdf)
 * Gerbers + drill files : [Download the manufactoring files](Electronics/manufactoring%20files.zip)
-* BOM: [download the PCB BOM](BOM/hexapod_pcb_bom.csv/)
+* BOM: [download the PCB BOM](BOM%20PCB.csv)
 
 **Board spec:**
 
@@ -109,7 +109,7 @@ Each foot includes a printed compliant spring element (PETG) acting as a passive
 | `.stl` | [3d printing files](CAD/STL(3d%20printing%20parts)) | ready to slice |
 | Renders | [photos of the CAD](CAD/renders) | Reference images |
 
-Full parts list, printed vs. purchased components, and quantities: [see the main BOM](BOM/BOM%20HEXAPOD.csv)
+Full parts list, printed vs. purchased components, and quantities: [see the main BOM](BOM%20main.csv)
 
 # Bill of Materials
 
@@ -117,11 +117,11 @@ Two separate BOMs are provided — one for the full robot, one for the PCB only.
 
 ### Full Robot BOM
 
-Full file: [see the full main BOM](BOM/BOM%20HEXAPOD.csv)
+Full file: [see the full main BOM](BOM%20main.csv)
 
 | Item | Qty | Description | Price |
 |---|---|---|---|
-| PCB | 1 | Custom PCB, UART servo controller — see [PCB BOM](#pcb-bom) below | $56.10 |
+| PCB | 1 | Custom PCB, UART servo controller — see [PCB BOM](BOM%20PCB.csv) below | $56.10 |
 | LX-16A | 18 | Serial bus UART servo, 17 kg·cm | $252.00 |
 | Battery | 1 | 6000mAh 2S, 7.4–8.4V | $27.70 |
 | Auto Fuse | 1 | 30A safety fuse | $5.31 |
@@ -136,7 +136,7 @@ Full file: [see the full main BOM](BOM/BOM%20HEXAPOD.csv)
 
 ### PCB BOM
 
-Full file: [see the full PCB BOM](BOM/hexapod%20pcb%20bom.csv)
+Full file: [see the full PCB BOM](BOM%20PCB.csv)
 
 | Ref Des | Qty | Description | Value | Footprint | Price (unit) |
 |---|---|---|---|---|---|
