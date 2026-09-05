@@ -30,6 +30,9 @@ Currently the project is in procces of building
 
  # Electronics PCB 
 <img width="718" height="768" alt="PCB TOP VIEW" src="https://github.com/user-attachments/assets/97f264cd-2c99-4b4e-a89b-87877c42cb54" />
+<img width="720" height="766" alt="F cu layer" src="https://github.com/user-attachments/assets/94a67c43-43af-441d-8d24-0f5f2dc3f5fa" />
+<img width="4096" height="2896" alt="image" src="https://github.com/user-attachments/assets/0999fd3b-5d95-4f35-9504-0da9727197dc" />
+
 
 Custom 4-layer control board 
 
