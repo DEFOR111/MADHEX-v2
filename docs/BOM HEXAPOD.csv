@@ -1,0 +1,12 @@
+name,qty,description,link,price
+PCB ,1,custom PCB UART servo controller ,"you will find the BOM for PCB as ""hexapod_pcb_bom""",56.1$
+LX-16A,18,serial bus UART servos ,https://aliexpress.ru/item/1005005028413207.html?spm=a2g2w.cart.cart_split.19.27024aa6kTaPCD&sku_id=12000031385600109,252$
+battery,1,6000mAh 2S 7.4-8.4v battery ,https://aliexpress.ru/item/1005002310526294.html?spm=a2g2w.cart.cart_split.17.27024aa6kTaPCD&sku_id=12000020028223874,27.7$
+auto FUSE,1,30A safe fuse,https://aliexpress.ru/item/1005006286934036.html?spm=a2g2w.cart.cart_split.18.27024aa6kTaPCD&sku_id=12000036617728281,5.31$
+XT60 ,1,pack of XT60 male/female for connection,https://aliexpress.ru/item/1005003628675139.html?spm=a2g2w.cart.cart_split.20.27024aa6Ni0kn3&sku_id=12000026563681135,2$
+PETG,900g,for 3d printing parts at least 900g,-,-
+M3 scrwew,pack,for connecting parts,-,-
+M3D5 inserts,pack,for connecting parts,-,-
+M2 screws,pack,for servo connection ,-,-
+wires ,pack,for connecting electronics ,-,-
+,,,VAT+delivery+components,Total:410$
