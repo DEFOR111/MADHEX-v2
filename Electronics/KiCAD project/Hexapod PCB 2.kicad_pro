@@ -579,7 +579,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../manufactoring files/",
+      "plot": "../",
       "specctra_dsn": "",
       "step": "../mechanics/CAD/Hexapod PCB 2.step",
       "vrml": ""

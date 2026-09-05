@@ -147,7 +147,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "../manufactoring files/")
+			(outputdirectory "../")
 		)
 	)
 	(footprint "Button_Switch_SMD:SW_SPST_TS-1088-xR020"
