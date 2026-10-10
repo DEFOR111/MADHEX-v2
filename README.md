@@ -12,9 +12,8 @@
 * Features
 * Electronics
 * CAD
+* firmware
 * BOM
-* Assembly guide
-* Gallery
 
 # Overview 
 MadHex v2 is an open-source hexapod robot designed for people who wanna build their spider friend and learn building — CAD, PCB , and design  are all custom-made. This repository contains everything needed to reproduce the robot: CAD source and manufacturing files, PCB design and production files, bill of materials, and a full assembly guide.
@@ -29,10 +28,13 @@ Currently the project is in procces of building
 * great design with beatiful decisions
 
  # Electronics PCB 
-<img width="718" height="768" alt="PCB TOP VIEW" src="https://github.com/user-attachments/assets/97f264cd-2c99-4b4e-a89b-87877c42cb54" />
-<img width="720" height="766" alt="F cu layer" src="https://github.com/user-attachments/assets/94a67c43-43af-441d-8d24-0f5f2dc3f5fa" />
-<img width="4096" height="2896" alt="image" src="https://github.com/user-attachments/assets/0999fd3b-5d95-4f35-9504-0da9727197dc" />
+ ### The schematics 
+<img width="4096" height="2896" alt="image" src="https://github.com/user-attachments/assets/53a2b499-3b88-46be-bf0f-c2e41eaa4a13" />
 
+### the renders
+<img width="612" height="814" alt="PCB LAYER F CU" src="https://github.com/user-attachments/assets/956f4e1f-0a0d-4091-a965-f6974bd1b094" />
+
+<img width="598" height="732" alt="PCB TOP" src="https://github.com/user-attachments/assets/a68121ea-1a98-45bb-93b9-8c02a190084d" />
 
 Custom 4-layer control board 
 
@@ -41,9 +43,10 @@ Custom 4-layer control board
 * **MCU:** ESP32-S3-WROOM-1 — great wifi/bluetooth MCU 
 * **IMU:** BNO055  — 9-DOF orientation for balancing
 * **Power input:** XT60 connector - for battery connection 
-* **Power protection:** P-MOSFET reverse-polarity protection IRF4905 + TVS diode
-* **Regulation:** dual TPS563201 buck converters — independent 3.3V and 5V 
-* **Power monitoring:** INA226 current/voltage sensor (I2C) + analog voltage divider 
+* **Power protection:** low-side N-MOSFET reverse-polarity protection NTMFS5C404NL + SMBJ10CA TVS diode + 30A fuse
+* **Regulation:** two TPS563201 buck converters: battery → 5.3V → Schottky → 5V rail → 3.3V
+* **USB power path:** Schottky diodes keep USB and the battery side separated
+* **Power monitoring:** INA226 current/voltage sensor (I2C) with a 2m shunt + analog voltage divider as backup 
 * **USB-C:**  USB with USBLC6-2P6 ESD protection
 * **Status LED:**  WS2812 RGB
 * **Servo interface:** 2× independent half-duplex UART buses , 3 legs per bus — driving serial bus servos over a single data line per bus instead of  PWM channels
@@ -79,12 +82,12 @@ Fully custom mechanical design, designed in autodesk Fusion every part is 3D-pri
 | size | 600 × 175 mm |
 | DOF per leg | 3 (coxa – femur – tibia) |
 | Total DOF | 18 |
-| Coxa segment | 50 mm |
-| Femur segment | 130 mm |
-| Tibia segment | 150 mm |
-| Actuators | LX-16A serial bus servo, 17 kg·cm torque (×18) |
+| Coxa (axis to axis) | 45 mm |
+| Femur (axis to axis) | 128 mm |
+| Tibia (knee axis to foot tip) | 141.8 mm straight line, 168.5 mm along the curved part |
+| Actuators | LX-16A serial bus servo, 17 kg·cm at 6V / 19.5 kg·cm at 7.4V (×18) |
 
-Segment lengths were chosen using the servo torque and calculated to be 50x130x150mm 
+Segment lengths were chosen using the servo torque  
 
 **3D printing:**
 
@@ -171,3 +174,45 @@ Full file: [see the full PCB BOM](BOM%20PCB.csv)
 | U5 | 1 | 9-axis IMU | BNO055 | LGA-28 | $9.41 |
 | U6 | 1 | Current/voltage monitor | INA226 | TSSOP-10 | $0.83 |
 | **Total (per board)** | | *incl. LCSC + AliExpress delivery, 16% VAT, shipping* | | **$56.10** |
+
+# Firmware
+
+Written in C++ with PlatformIO (Arduino framework) for the ESP32-S3
+
+**Features:**
+
+* **Inverse kinematics** from the CAD joint points, with joint limits
+* **Gaits:** ripple (default), tripod and wave
+* **Movement:** forward, backward, sideways, turning in place, combined; adjustable body height
+* **States:** sit, stand up, stand, walk, sit down, emergency stop
+* **Safe startup:** servo output is off after power-up; when enabled, it reads every servo position and moves slowly to the sitting pose
+* **Calibration:** trim and direction for each of the 18 servos
+* **Safety:** low battery, servo overheating, emergency stop, stop on lost Wi-Fi link
+* **Sensors:** INA226 current and voltage, BNO055 orientation, optional body leveling
+* **Status LED:** a color for each robot state
+* **Tests:** 200+ unit tests that run on a PC without hardware
+
+**Pinout:**
+
+| Function | GPIO |
+|---|---|
+| Servo bus 1 TX / RX (legs A, B, F) | 4 / 5 |
+| Servo bus 2 TX / RX (legs C, D, E) | 17 / 18 |
+| I2C SDA / SCL (INA226 0x40, BNO055 0x28) | 8 / 9 |
+| Battery voltage (ADC) | 1 |
+| WS2812 data | 7 |
+| BNO055 reset / interrupt | 10 / 11 |
+| USB D− / D+ | 19 / 20 |
+
+**Build and flash** (VS Code + PlatformIO):
+
+```
+cd Firmware
+pio test -e native        # unit tests on the PC
+pio run -t upload         # flash the ESP32-S3 over USB-C
+pio run -t uploadfs       # upload the web control page
+```
+
+
+**Control:**
+* USB serial console, 115200 baud: type `help` for the command list
