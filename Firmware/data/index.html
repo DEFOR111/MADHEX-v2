@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Hexapod</title>
+<style>
+  :root {
+    --bg: #101317; --panel: #1a1f26; --line: #2a313b; --text: #e6e9ee; --dim: #8b95a3;
+    --accent: #3fa7ff; --ok: #3ccf7a; --warn: #f2b33d; --bad: #ff4d4d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 480px; margin: 0 auto; padding: 12px 16px 24px; }
+  header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  h1 { font-size: 20px; margin: 0; flex: 1; }
+  .badge { font-size: 12px; padding: 3px 8px; border-radius: 10px; background: var(--line); color: var(--dim); }
+  .badge.on { background: #173a26; color: var(--ok); }
+  .led { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); background: #222; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+  .grid div span { display: block; font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: .04em; }
+  .grid div b { font-weight: 600; }
+  .loop { margin-top: 8px; font-size: 12px; color: var(--dim); }
+  .loop.slow { color: var(--warn); }
+  #joy { position: relative; width: min(64vw, 240px); height: min(64vw, 240px); margin: 6px auto 12px;
+         border-radius: 50%; background: radial-gradient(circle, #222a33 0%, #161b21 70%);
+         border: 2px solid var(--line); touch-action: none; }
+  #knob { position: absolute; left: 50%; top: 50%; width: 34%; height: 34%; margin: -17% 0 0 -17%;
+          border-radius: 50%; background: var(--accent); opacity: .9; pointer-events: none; }
+  #joy .hint { position: absolute; width: 100%; text-align: center; font-size: 11px; color: var(--dim); }
+  label { display: block; font-size: 12px; color: var(--dim); margin: 8px 0 4px; }
+  input[type=range] { width: 100%; touch-action: none; accent-color: var(--accent); }
+  select, button { font: inherit; color: var(--text); background: #232a33; border: 1px solid var(--line);
+                   border-radius: 10px; padding: 12px; }
+  select { width: 100%; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  button:active { filter: brightness(1.3); }
+  #stop { width: 100%; margin-top: 4px; padding: 22px; font-size: 22px; font-weight: 800; letter-spacing: .08em;
+          background: #b3141c; border-color: #ff4d4d; color: #fff; }
+  #reply { font-size: 12px; color: var(--dim); min-height: 1.4em; margin-top: 8px; word-break: break-word; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Hexapod</h1>
+    <div class="led" id="led" title="status LED"></div>
+    <span class="badge" id="link">offline</span>
+  </header>
+
+  <section class="panel">
+    <div class="grid">
+      <div><span>State</span><b id="state">--</b></div>
+      <div><span>Gait</span><b id="gait">--</b></div>
+      <div><span>Battery</span><b id="batt">--</b></div>
+      <div><span>Current</span><b id="current">--</b></div>
+      <div><span>Roll / pitch</span><b id="tilt">--</b></div>
+      <div><span>Servos</span><b id="servos">--</b></div>
+    </div>
+    <div class="loop" id="loop">loop: --</div>
+  </section>
+
+  <section class="panel">
+    <div id="joy"><div class="hint" style="top:6px">forward</div><div id="knob"></div></div>
+    <label for="turn">Turn (left / right, springs back)</label>
+    <input type="range" id="turn" min="-100" max="100" value="0">
+    <label for="height">Height: <b id="heightValue">0</b> mm</label>
+    <input type="range" id="height" min="-20" max="30" value="0">
+    <label for="gaitSelect">Gait (only when not moving)</label>
+    <select id="gaitSelect">
+      <option value="tripod">tripod</option>
+      <option value="ripple">ripple</option>
+      <option value="wave">wave</option>
+    </select>
+    <div class="row">
+      <button id="up">Up</button>
+      <button id="down">Down</button>
+      <button id="servosOn">Servos on</button>
+      <button id="servosOff">Servos off</button>
+    </div>
+    <div id="reply"></div>
+  </section>
+
+  <button id="stop">EMERGENCY STOP</button>
+</main>
+
+<script>
+"use strict";
+let ws = null;
+let joyX = 0, joyY = 0;
+let driving = false;
+let heightBusy = false;
+let led = { color: "#000000", blink_ms: 0, flash: false };
+
+const $ = (id) => document.getElementById(id);
+
+function connect() {
+  ws = new WebSocket("ws://" + location.host + "/ws");
+  ws.onopen = () => { $("link").textContent = "connected"; $("link").className = "badge on"; };
+  ws.onclose = () => {
+    $("link").textContent = "offline"; $("link").className = "badge";
+    setTimeout(connect, 1000);
+  };
+  ws.onmessage = (event) => {
+    const m = JSON.parse(event.data);
+    if (m.type === "status") showStatus(m);
+    if (m.type === "reply" && !m.text.startsWith("walk:")) $("reply").textContent = m.text;
+  };
+}
+
+function send(text) {
+  if (ws && ws.readyState === WebSocket.OPEN) ws.send(text);
+}
+
+function fmt(value, digits, unit) {
+  return value === null ? "--" : value.toFixed(digits) + unit;
+}
+
+function showStatus(s) {
+  $("state").textContent = s.state;
+  $("gait").textContent = s.gait;
+  $("servos").textContent = s.servos + (s.level ? " · level on" : "");
+  $("batt").textContent = s.batt_v === null ? "--" : s.batt_v.toFixed(2) + " V " + s.batt_state;
+  $("current").textContent = fmt(s.current_a, 2, " A");
+  $("tilt").textContent = s.roll === null ? "--" : s.roll.toFixed(1) + "° / " + s.pitch.toFixed(1) + "°";
+  const l = s.loop;
+  $("loop").textContent = "loop: " + l.ups + " updates/s · longest pass " + (l.max_loop_us / 1000).toFixed(1)
+    + " ms · longest gap " + l.max_gap_ms.toFixed(1) + " ms";
+  $("loop").className = (l.ups < 49 || l.max_gap_ms > 25) ? "loop slow" : "loop";
+  if (document.activeElement !== $("gaitSelect")) $("gaitSelect").value = s.gait;
+  if (!heightBusy) {
+    $("height").min = s.height_min; $("height").max = s.height_max; $("height").value = s.height;
+    $("heightValue").textContent = s.height;
+  }
+  led = s.led;
+}
+
+setInterval(() => {
+  const t = Date.now();
+  let color = led.color;
+  if (led.blink_ms > 0 && t % led.blink_ms >= led.blink_ms / 2) color = "#000000";
+  if (led.flash && t % 2000 < 100) color = "#ffffff";
+  $("led").style.background = color === "#000000" ? "#222" : color;
+}, 50);
+
+const joy = $("joy"), knob = $("knob");
+function moveJoystick(event) {
+  const r = joy.getBoundingClientRect();
+  let x = (event.clientX - r.left - r.width / 2) / (r.width / 2);
+  let y = (event.clientY - r.top - r.height / 2) / (r.height / 2);
+  const length = Math.hypot(x, y);
+  if (length > 1) { x /= length; y /= length; }
+  joyX = x; joyY = y;
+  knob.style.transform = "translate(" + (x * r.width * 0.33) + "px," + (y * r.height * 0.33) + "px)";
+}
+function releaseJoystick() {
+  joyX = 0; joyY = 0;
+  knob.style.transform = "";
+}
+joy.addEventListener("pointerdown", (e) => { joy.setPointerCapture(e.pointerId); moveJoystick(e); });
+joy.addEventListener("pointermove", (e) => { if (joy.hasPointerCapture(e.pointerId)) moveJoystick(e); });
+joy.addEventListener("pointerup", releaseJoystick);
+joy.addEventListener("pointercancel", releaseJoystick);
+
+const turn = $("turn");
+["pointerup", "pointercancel", "touchend", "mouseup"].forEach((name) =>
+  turn.addEventListener(name, () => { turn.value = 0; }));
+
+setInterval(() => {
+  const vx = -joyX, vy = joyY, t = -turn.value / 100;
+  const active = Math.abs(vx) > 0.05 || Math.abs(vy) > 0.05 || Math.abs(t) > 0.05;
+  if (active) {
+    send("walk " + vx.toFixed(2) + " " + vy.toFixed(2) + " " + t.toFixed(2));
+    driving = true;
+  } else if (driving) {
+    send("x");
+    driving = false;
+  }
+}, 100);
+
+const height = $("height");
+let lastHeightMs = 0, lastHeightValue = null;
+function sendHeight() {
+  if (height.value !== lastHeightValue) { send("height " + height.value); lastHeightValue = height.value; }
+  lastHeightMs = Date.now();
+}
+height.addEventListener("input", () => {
+  heightBusy = true;
+  $("heightValue").textContent = height.value;
+  if (Date.now() - lastHeightMs > 150) sendHeight();
+});
+height.addEventListener("change", () => { sendHeight(); heightBusy = false; });
+
+$("gaitSelect").addEventListener("change", (e) => send("gait " + e.target.value));
+$("up").addEventListener("click", () => send("up"));
+$("down").addEventListener("click", () => send("down"));
+$("servosOn").addEventListener("click", () => send("servos on"));
+$("servosOff").addEventListener("click", () => send("servos off"));
+$("stop").addEventListener("click", () => send("stop"));
+
+connect();
+</script>
+</body>
+</html>
