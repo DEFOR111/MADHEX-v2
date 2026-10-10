@@ -214,4 +214,4 @@ pio test -e native        # unit tests on the PC
 pio run -t upload         # flash the ESP32-S3 over USB-C
 pio run -t uploadfs       # upload the web control page
 ```
-
+a bit about the project history : i always wanted to make the hexapod but had no skills so 1 year passed i got pretty good skills in cad electronics and etc so now this project is real 
