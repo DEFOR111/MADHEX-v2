@@ -536,12 +536,12 @@
         "via_drill": 0.4
       },
       {
-        "clearance": 0.15,
+        "clearance": 0.2,
         "name": "logic Power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "priority": 0,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.15,
+        "track_width": 0.5,
         "tuning_profile": "",
         "via_diameter": 0.75,
         "via_drill": 0.4
@@ -572,6 +572,14 @@
       {
         "netclass": "high Power",
         "pattern": "GND"
+      },
+      {
+        "netclass": "high Power",
+        "pattern": "-BATT"
+      },
+      {
+        "netclass": "logic Power",
+        "pattern": "5v_buck"
       }
     ]
   },
@@ -716,7 +724,7 @@
         "uuid": "e9dd2b68-0325-4c33-a470-bfd3e9a34ef2"
       }
     ],
-    "used_designators": "J1-8,#FLG1-5,R1-27,#PWR1-60,D1-3,Q1-5,C1-26,SW1-3,U1-6,L1-2,H1-4",
+    "used_designators": "J1-8,#FLG1-7,R1-29,#PWR1-60,D1-5,Q1-5,C1-26,SW1-3,U1-6,L1-2,H1-4",
     "variants": []
   },
   "sheets": [

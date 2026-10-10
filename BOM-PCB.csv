@@ -1,0 +1,37 @@
+Hexapod Controller — BOM,,,,,,,
+Qty (boards):,,,,,,,
+,,,,,,,
+Ref Des,Qty/bd,Total Qty,Description,Value,Footprint,link,price
+"C1,C2,C23,C24",4,10,"Cap, electrolytic",1000uF 16V,CP_Elec 10x10mm,https://aliexpress.ru/item/1005002964957462.html?spm=a2g2w.cart.cart_split.5.52314aa6uJV4Wt&sku_id=12000022993660173,2.23$
+"C3,C4,C9,C10",4,100,Cap ceramic,10uF 25v,805,https://aliexpress.ru/item/1005009339427569.html?spm=a2g2w.cart.cart_split.4.52314aa6uJV4Wt&sku_id=12000048878731086,1.21$
+"C5,C6,C11,C14,C16,C18,C19,C20,C21,C22,C25,C26",12,100,Cap ceramic,0.1uF 100v,805,https://aliexpress.ru/item/1005009339427569.html?spm=a2g2w.cart.cart_split.2.52314aa6uJV4Wt&sku_id=12000048878731064,0.91$
+"C7,C8,C12,C13,C15",5,50,Cap ceramic,22uF  25v,805,https://aliexpress.ru/item/1005008523091680.html?sku_id=12000045550598829&spm=a2g2w.productlist.search_results.1.3404263ewwhSQ7,1.68$
+C17,1,100,Cap ceramic,1uF 50v,805,https://aliexpress.ru/item/1005009339427569.html?spm=a2g2w.cart.cart_split.1.52314aa6uJV4Wt&sku_id=12000048878731073,1.08$
+D1,1,5,TVS diode bidirectional,SMBJ10CA,SMB,https://www.lcsc.com/product-detail/C83278.html?s_z=n_q_smbj10ca,0.55$
+D2,1,5,RGB LED,WS2812B,PLCC-6 5.0x5.0mm P1.6mm,https://www.lcsc.com/product-detail/C114586.html?s_z=n_q_t_WS2812B&spm=wm.fly.bg.0.xh___wm.ssy.tc.0.tz&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNeT1RXX1JWRVJWUTsOAxUeFF5JWBYZEEoKFBINSQcJGk4NBhYS,0.52$
+"D3,D4",2,10,Schottky diode 3A 40V,SS34,SMA,https://www.lcsc.com/product-detail/C8678.html?s_z=n_q_x_ss34&spm=wm.ssy.em.0.tz&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNfRldYXlVWRVNfVzsOAxUeFF5JWBYZEEoKFBINSQcJGk4eFQsCAgIaSgADAwAHC0slT1JcUFxIHxUDCw%3D%3D,0.7$
+D5,1,10,Zener diode 12V,BZT52C12,SOD-123,https://www.lcsc.com/product-detail/C668891.html?s_z=n_q_bzt52c12&spm=wm.fly.bg.0.stp&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNfRldYXlVQR1FbUjsOAxUeFF5JWBYZEEoKFBINSQcJGk4eFQsCAgIaSgADAwAHC0slT1dZX0oOAwwC,0.56$
+J1,1,0,Battery connector,XT60-M PCB mount,AMASS XT60-M 1x02 P7.20mm Vertical,https://www.lcsc.com/product-detail/C5334533.html?spm=wm.gwc.xh.0.tp___wm.sxq.ssl.gwc&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNeT1RXX1JWRVJWUTsOAxUeFF5JWBYZEEoKFBINSQcJGk4NBhYS,0.38$
+J2-J7,6,0,Servo bus connector leg1-leg6,3-pin 2.5mm (JST XH),JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,https://www.lcsc.com/product-detail/C144394.html?s_z=n_q_C144394&globalKeyword=C144394,0.55$
+J8,1,0,USB-C receptacle,USB2.0 16-pin,HRO TYPE-C-31-M-12,https://www.lcsc.com/product-detail/C165948.html?s_z=n_q_C165948&globalKeyword=C165948,0.86$
+L1,1,0,Power inductor,3.3uH,SRN4018,https://www.lcsc.com/product-detail/C19947635.html?s_z=n_q_SRN4018%25203R3M&spm=wm.fly.bg.2.xh&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNeT1deVlNVRlRaUjsOAxUeFF5JWBYZEEoKFBINSQcJGk4NBhADEA4cHktXRllfSQwSGg0%3D,0.59$
+L2,1,5,Power inductor,2.2uH,SRN4018,https://www.lcsc.com/product-detail/C913207.html,1.76$
+Q1,1,2,N-MOSFET reverse polarity protection,NTMFS5C404NLT1G,DFN-5 5x6 (SO-8FL),https://www.lcsc.com/product-detail/C604432.html,2.62$
+"Q2,Q3",2,20,NPN transistor half-duplex,MMBT3904,SOT-23,https://www.lcsc.com/product-detail/C242260.html?s_z=n_q_mmbt3904&spm=wm.fly.bg.0.stp&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNfRldYXldTQ1VbUzsOAxUeFF5JWBYZEEoKFBINSQcJGk4NBhYS,0.72$
+"R1,R3,R4,R5,R6,R14,R15,R18,R19,R20,R22",11,100,Resistor,10k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999160&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+R2,1,100,Resistor ,59k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999178&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.41$
+"R8,R28",2,100,Resistor ,100k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999184&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+"R9,R7",1,100,Resistor ,33k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999172&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+"R10,R12,R24,R29",4,100,Resistor,1k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999136&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+"R11,R13,R25,R26",4,100,Resistor,4.7k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999152&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+"R16,R17",2,100,Resistor,5.1k,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999153&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+R21,1,100,Resistor,330R,805,https://aliexpress.ru/item/1005009887091465.html?sku_id=12000050482999124&spm=a2g2w.productlist.search_results.2.43366ac83vDx1S,0.45$
+R23,1,5,Shunt resistor 2 mOhm 1% 5W,CSS2H-2512K-2L00F,2512,bourns css2h-2512k-2l00f - Chip Resistor - Surface Mount,0.80$
+"SW2,SW3",2,10,Tactile button,TS-1088,SMD,https://www.lcsc.com/product-detail/C455280.html?s_z=n_q_ts-1088&spm=wm.fly.bg.0.stp&lcsc_vid=QQddBlRTTwAPX1BVQAJaV1VRElUMVF1URlQIBAZRFFUxVlNeT1deVFVWRlldVjsOAxUeFF5JWBYZEEoKFBINSQcJGk4NBhADEA4cHktQQlBADxALGw%3D%3D,0.64$
+"U1,U2",2,10,"Buck converter
+",TPS563201,SOT-23-6,https://www.lcsc.com/product-detail/C116592.html?s_z=n_q_C116592&globalKeyword=C116592,0.78$
+U3,1,0,"MCU module (8MB flash, no PSRAM)",ESP32-S3-WROOM-1-N8,SMD module,https://www.lcsc.com/product-detail/C2913198.html?s_z=n_q_C2913198&globalKeyword=C2913198  ,4.91$
+U4,1,0,ESD protection,USBLC6-2P6,SOT-666,https://www.lcsc.com/product-detail/C15999.html?s_z=n_q_c15999&globalKeyword=c15999,1.33$
+U5,1,0,9-axis IMU,BNO055,LGA-28 3.8x5.2mm,https://www.lcsc.com/product-detail/C93216.html?s_z=n_q_C93216&globalKeyword=C93216,9.41$
+U6,1,0,Current/voltage monitor,INA226,TSSOP-10,https://www.lcsc.com/product-detail/C49851.html?s_z=n_q_C49851&globalKeyword=C49851,0.83$
+,,,,,LCSC+ALIEXPRESS+DELIVERY+16% VAT+SHIPPING,,TOTAL: 49.87$
