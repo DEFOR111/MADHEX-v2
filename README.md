@@ -16,7 +16,7 @@
 * BOM
 
 # Overview 
-MadHex v2 is an open-source hexapod robot designed for people who wanna build their spider friend and learn building — CAD, PCB , and design  are all custom-made. This repository contains everything needed to reproduce the robot: CAD source and manufacturing files, PCB design and production files, bill of materials, and a full assembly guide.
+MadHex v2 is an open-source hexapod robot designed for people who wanna build their spider friend and learn building — CAD, PCB , and design  are all custom-made. This repository contains everything needed to reproduce the robot: CAD source and manufacturing files, PCB design and production files, bill of materials
 
 Currently the project is in procces of building 
 
